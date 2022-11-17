@@ -8,24 +8,30 @@ date: 2022-11-03
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <iostream>
+#include <unistd.h>
 namespace plapacz6_solution {
 
-/**
- * @brief print 
- * 
- * @param cli_param - map of available options and their values
- *    -f   - json file to search throung
- *    -c   - number of results
- *    -p   - option of processing founded information
- *        -p field2occurrenceCount
- *        -p field2valuesSum
- *    //TODO:
- *    -s  -string describing name of field of summing value
- *    -u  -string identyfying one unit of json file (one json doc in file consisted jsons documents one per row)
- *    ////:TODO
- * @return int 
- */
-int print_result(std::unordered_map<char, std::string> cli_param);
+struct opt1_t{
+  char c;
+  char *s;
+};
+struct opt_name_t {
+  opt1_t fname;
+  opt1_t nresult;
+  opt1_t procOccur;
+  opt1_t procSum;
+  opt1_t catName;
+  opt1_t valName;
+};
+
+struct cli_param_t {
+  std::unordered_map<char, std::string> m;
+  opt_name_t o;  
+};
+
+int process_cli_param(int argc, char **argv, cli_param_t& cli_param);
+int print_result(cli_param_t& cli_param);
 
 } //namespace plapacz6_solution
 

@@ -13,7 +13,7 @@ include_directories(include)
 enable_testing()
 
 # does the application run
-add_test(NAME Runs COMMAND ../build/find_field_in_json_file  -f file.json -c 6 -o field2occurrenceCount)
+add_test(NAME Runs COMMAND ../build/find_field_in_json_file  -f file.json -c 6 -o category_occuranceCount)
 
 # does the usage message work?
 add_test(NAME Usage COMMAND ../build/find_field_in_json_file)

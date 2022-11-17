@@ -22,15 +22,15 @@ class json_syntax_error_exception : public std::invalid_argument {
 
 struct json_fields_value_t 
 {  
-  uint32_t json_field2_longlong;
-  std::string json_field1_str;  
+  uint32_t json_docValue_longlong;
+  std::string json_categoryName_str;  
   json_fields_value_t();
   void clear();
 };
 
-template<typename T> //requires json_field2_longlong
-bool sort_by_json_field2_longlong(T& a, T& b){
-  return a.json_field2_longlong > b.json_field2_longlong;
+template<typename T> //requires json_docValue_longlong
+bool sort_by_json_docValue_longlong(T& a, T& b){
+  return a.json_docValue_longlong > b.json_docValue_longlong;
 }  
 #ifdef DEBUG
 std::ostream& operator<<(std::ostream& os, const json_fields_value_t& obj);
@@ -39,14 +39,14 @@ std::ostream& operator<<(std::ostream& os, const json_fields_value_t& obj);
 
 template <typename T>
 struct result_values_t_template{
-  std::string region;
+  std::string categoryName;
   uint32_t count;
   T costs;    
-  result_values_t_template(std::string region_, uint32_t count_, T costs_) :
-     region(region_), count(count_), costs(costs_)
+  result_values_t_template(std::string categoryName_, uint32_t count_, T costs_) :
+     categoryName(categoryName_), count(count_), costs(costs_)
   {}  
   void clear(){
-    region = "";
+    categoryName = "";
     costs = 0;
     count = 0;
   }  
@@ -60,7 +60,7 @@ typedef result_values_t_template<uint64_t > result_values_t;
 #endif
 
 template <typename T> //requires costs
-bool sort_by_costs(T& a, T& b){
+bool sort_by_values(T& a, T& b){
   return a.costs > b.costs;
 }
 template<typename T> //requires count
@@ -70,7 +70,7 @@ bool sort_by_count(T& a, T& b){
 
 
 
-void count_field2_occurrence
+void count_docSameCategory_occurrence
     (std::vector<json_fields_value_t>& values, 
     std::vector<result_values_t>& counted_values);
               
