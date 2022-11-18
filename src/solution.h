@@ -8,10 +8,35 @@ date: 2022-11-03
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <iostream>
+#include <unistd.h>
+
 #include "print_result.h"
 namespace plapacz6_solution {
 
 //#define DEBUG
+
+
+struct opt1_t{
+  char c;  //option character
+  char *s; //allowed value (nullptr - value is user dependent)
+};
+struct opt_name_t {
+  opt1_t fname;
+  opt1_t nresult;
+  opt1_t procOccur;
+  opt1_t procSum;
+  opt1_t catName;
+  opt1_t valName;
+  std::string&& get_opt_str4getopt();
+};
+struct cli_param_t {
+  std::unordered_map<char, std::string> m;
+  opt_name_t o;  
+};
+// --------------------------------
+
+
 
 class json_syntax_error_exception : public std::invalid_argument {
   public:

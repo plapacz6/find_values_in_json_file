@@ -153,14 +153,18 @@ void find_solv_doc(
 }
 
 
-opt_name_t opt_name = {
-  'f', nullptr,
-  'c', nullptr,
-  't', "category_occuranceCount",
-  't', "category_valueSum",
-  'k', nullptr,
-  'v', nullptr,
-};
+
+std::string&& opt_name_t::get_opt_str4getopt(){
+  std::string opts = "";
+  opts += this->fname.o + ":";
+  opts += this->nresult.o + ":";
+  opts += this->procOccur.o + ":";
+  opts += this->catName.o + ":";
+  opts += this->valName.o + ":";
+  return opts;
+}
+
+
 
 int process_cli_param(int argc, char **argv, cli_param_t& cli_param){
   cli_param.o = {
@@ -171,18 +175,33 @@ int process_cli_param(int argc, char **argv, cli_param_t& cli_param){
   'k', nullptr,
   'v', nullptr,
   };
-
-
-  //TODO:
-  getopt(arc,argv, cli_param.o.fname);
-  getopt(arc,argv, cli_param.o.nresult);
-  getopt(arc,argv, cli_param.o.catName);
-  getopt(arc,argv, cli_param.o.valName);
-
-  getopt(arc,argv, cli_param.o.procOccur);
-  getopt(arc,argv, cli_param.o.procSum);
-
+  std::string options = cli_param.o.get_opt_str4getopt();
+  int opt_char = 0;
+  /* from <unistd.h>
+  optarg - argument founded opiton
+  */
+  while( (opt_char = getopt(arc, argv, options.c_str()) != -1){
+    if(opt_char == '?') {
+      std::cout << "Usage: \n" 
+      << argv[0] << " -f json_file -k category_field_name -v value_field_name" << std::endl;
+      << "
+ *  available options and their values
+ *    -f   - json file to search throung (one json doc per row in file)
+ *    -c   - number of results
+ *    -t   - option of processing founded information
+ *        -t category_occuranceCount
+ *        -t category_valueSum
+ *    //TODO:
+ *    -k  -string representing name of field category's name (one per json doc)
+ *    -v  -string representing name of field holding value (one per json doc)";
+      std::cout << std::endl;
+      return -1;
+    }
+    cli_param.m[opt_char] = optarg;
+  }
+  return 0;
 }
+
 
 
 /**
